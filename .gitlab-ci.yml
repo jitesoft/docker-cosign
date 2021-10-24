@@ -56,7 +56,7 @@ build:
     - cd ..
     - mkdir binaries
     - cp cosign-*/cosign binaries/cosign-${GOARCH}
-      - ./binaries/cosign-${GOARCH} version
+    - ./binaries/cosign-${GOARCH} version
   rules:
     - if: "$BUILD"
       when: always
