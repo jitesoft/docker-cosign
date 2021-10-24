@@ -66,6 +66,8 @@ build:
       - binaries
     expire_in: 1 day
     public: true
+  tags:
+    - native-amd64
 
 containerize:
   stage: containerize
