@@ -26,6 +26,10 @@ Dockerfile and scripts can be found at [GitLab](https://gitlab.com/jitesoft/dock
 
 This image follows the [Jitesoft image label specification 1.0.0](https://gitlab.com/snippets/1866155).
 
+### Signature
+
+Cosign public key for this image can be found at [https://jitesoft.com/cosign.pub](https://jitesoft.com/cosign.pub).
+
 ### Licenses
 
 Cosign is released under the [Apache v2.0](https://github.com/sigstore/cosign/blob/main/LICENSE) license.  

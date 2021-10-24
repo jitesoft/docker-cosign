@@ -1,5 +1,8 @@
 include:
-  - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/Scan/trivy.yml
+  - project: jitesoft/gitlab-ci-lib
+    file: Scan/trivy.yml
+  - project: jitesoft/gitlab-ci-lib
+    file: OCI/sign.yml
 
 stages:
   - check
@@ -34,7 +37,6 @@ check:
     paths:
       - version.txt
     policy: pull
-
 
 build:
   stage: build
@@ -86,19 +88,11 @@ containerize:
   tags: [ jitesoft, buildx, protected ]
 
 sign:
+  extends: .sign
   tags: [ jitesoft, protected, buildx ]
   stage: sign
-  image: registry.gitlab.com/jitesoft/dockerfiles/cosign:latest
-  before_script:
-    - mkdir ~/.docker
-    - cp ${DOCKER_CONFIG_FILE} ~/.docker/config.json
-  script:
-    - COSIGN_TAGS="${CI_REGISTRY_IMAGE}:latest ${CI_REGISTRY_IMAGE}:${VERSION}"
-    - |
-      for IMAGE in ${COSIGN_TAGS};
-      do
-        cosign sign -key ${COSIGN_PRIV_KEY_PATH} ${IMAGE}
-      done
+  variables:
+    COSIGN_ANNOTATIONS: "-a sig=jitesoft-bot"
   rules:
     - if: "$BUILD"
       when: on_success
