@@ -47,6 +47,7 @@ build:
   variables:
     PKG: "github.com/sigstore/cosign/cmd/cosign/cli"
   script:
+    - apk add --no-cache gcc
     - wget https://github.com/sigstore/cosign/archive/refs/tags/${VERSION}.tar.gz
     - tar -xf ${VERSION}.tar.gz
     - cd cosign-*
