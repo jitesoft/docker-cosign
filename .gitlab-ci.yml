@@ -73,7 +73,7 @@ containerize:
       artifacts: true
   rules:
     - if: "$BUILD"
-      when: always
+      when: on_success
     - when: never
   image: registry.gitlab.com/jitesoft/dockerfiles/misc:latest
   script:
@@ -93,7 +93,7 @@ sign:
       done
   rules:
     - if: "$BUILD"
-      when: always
+      when: on_success
     - when: never
 
 scan:
