@@ -86,7 +86,7 @@ containerize:
   tags: [ jitesoft, buildx, protected ]
 
 sign:
-  tags: [ jitesoft, protected ]
+  tags: [ jitesoft, protected, buildx ]
   stage: sign
   image: registry.gitlab.com/jitesoft/dockerfiles/cosign:latest
   script:
