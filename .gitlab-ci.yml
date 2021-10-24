@@ -110,7 +110,6 @@ scan:
 
 create-cache:
   stage: cache
-  when: on_success
   script:
     - echo "${VERSION}" > version.txt
   cache:
@@ -119,5 +118,5 @@ create-cache:
     policy: push
   rules:
     - if: "$BUILD"
-      when: always
+      when: on_success
     - when: never
