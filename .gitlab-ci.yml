@@ -93,7 +93,8 @@ sign:
   stage: sign
   variables:
     COSIGN_ANNOTATIONS: "-a sig=jitesoft-bot"
-    COSIGN_TAGS: "${CI_REGISTRY_IMAGE}:latest ${CI_REGISTRY_IMAGE}:${VERSION} jitesoft/cosign:latest jitesoft/cosign:${VERSION} ghcr.io/jitesoft/cosign:latest ghcr.io/jitesoft/cosign:${VERSION}"
+    SIGN_TAGS: "${VERSION},latest"
+    SIGN_IMAGES: "jitesoft/cosign,${CI_REGISTRY_IMAGE},ghcr.io/jitesoft/cosign"
   rules:
     - if: "$BUILD"
       when: on_success
