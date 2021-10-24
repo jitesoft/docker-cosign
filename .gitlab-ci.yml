@@ -82,7 +82,7 @@ containerize:
     - when: never
   image: registry.gitlab.com/jitesoft/dockerfiles/misc:latest
   script:
-    - TAG_LIST=$(helper "${CI_REGISTRY_IMAGE}" "latest,${VERSION}")
+    - TAG_LIST=$(helper "${CI_REGISTRY_IMAGE},ghcr.io/jitesoft/cosign,jitesoft/cosign" "latest,${VERSION}")
     - mv entrypoint binaries/entrypoint
     - docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 --progress plain --push ${TAG_LIST} --build-arg VERSION=${VERSION} .
   tags: [ jitesoft, buildx, protected ]
@@ -93,6 +93,7 @@ sign:
   stage: sign
   variables:
     COSIGN_ANNOTATIONS: "-a sig=jitesoft-bot"
+    COSIGN_TAGS: "${CI_REGISTRY_IMAGE}:latest ${CI_REGISTRY_IMAGE}:${VERSION} jitesoft/cosign:latest jitesoft/cosign:${VERSION} ghcr.io/jitesoft/cosign:latest ghcr.io/jitesoft/cosign:${VERSION}"
   rules:
     - if: "$BUILD"
       when: on_success
