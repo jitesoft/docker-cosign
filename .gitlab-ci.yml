@@ -89,6 +89,9 @@ sign:
   tags: [ jitesoft, protected, buildx ]
   stage: sign
   image: registry.gitlab.com/jitesoft/dockerfiles/cosign:latest
+  before_script:
+    - mkdir ~/.docker
+    - cp ${DOCKER_CONFIG_FILE} ~/.docker/config.json
   script:
     - COSIGN_TAGS="${CI_REGISTRY_IMAGE}:latest ${CI_REGISTRY_IMAGE}:${VERSION}"
     - |
