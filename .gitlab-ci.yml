@@ -81,6 +81,7 @@ containerize:
   image: registry.gitlab.com/jitesoft/dockerfiles/misc:latest
   script:
     - TAG_LIST=$(helper "${CI_REGISTRY_IMAGE}" "latest,${VERSION}")
+    - mv entrypoint binaries/entrypoint
     - docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 --progress plain --push ${TAG_LIST} --build-arg VERSION=${VERSION} .
   tags: [ jitesoft, buildx, protected ]
 
