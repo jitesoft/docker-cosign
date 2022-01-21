@@ -10,7 +10,7 @@ LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>" \
       com.jitesoft.project.repo.uri="https://gitlab.com/jitesoft/dockerfiles/cosign" \
       com.jitesoft.project.repo.issues="https://gitlab.com/jitesoft/dockerfiles/cosign/issues" \
       com.jitesoft.project.registry.uri="registry.gitlab.com/jitesoft/dockerfiles/cosign" \
-      com.jitesoft.app.cosign.version="${VERSION}"
+      com.jitesoft.app.cosign.version="${VERSION}" \
       # Open container labels
       org.opencontainers.image.version="${VERSION}" \
       org.opencontainers.image.created="${BUILD_TIME}" \
