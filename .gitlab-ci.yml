@@ -84,7 +84,7 @@ containerize:
   script:
     - TAG_LIST=$(helper "${CI_REGISTRY_IMAGE},ghcr.io/jitesoft/cosign,jitesoft/cosign" "latest,${VERSION}")
     - mv entrypoint binaries/entrypoint
-    - docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 --progress plain --push ${TAG_LIST} --build-arg VERSION=${VERSION} .
+    - docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 --progress plain --push ${TAG_LIST} --build-arg BUILD_TIME=$(date -Iseconds) --build-arg VERSION=${VERSION} .
   tags: [ jitesoft, buildx, protected ]
 
 sign:
