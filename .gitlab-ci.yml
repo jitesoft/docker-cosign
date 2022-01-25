@@ -70,7 +70,7 @@ build:
     - tar -xf cosign.tar.gz
     - cd cosign-*
     - BUILD_DATE=$(date "+%Y-%m-%dT%H:%M:%SZ")
-    - CGO_ENABLED=on go build -ldflags="-s -w -X $(PKG).gitTreeState=clean -X ${PKG}.GitVersion=${VERSION} -X ${PKG}.buildDate=${BUILD_DATE}" -o cosign ./cmd/cosign
+    - CGO_ENABLED=on go build -ldflags="-s -w -X ${PKG}.gitTreeState=clean -X ${PKG}.GitVersion=${VERSION} -X ${PKG}.buildDate=${BUILD_DATE}" -o cosign ./cmd/cosign
     - cd ..
     - mkdir binaries
     - cp cosign-*/cosign binaries/cosign-${GOARCH}
