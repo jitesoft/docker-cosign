@@ -43,9 +43,9 @@ build:
   image: registry.gitlab.com/jitesoft/dockerfiles/go:1.16
   parallel:
     matrix:
-      - { GOARCH: "amd64", GIT_STRATEGY: "none" }
-      - { GOARCH: "arm64", GIT_STRATEGY: "none" }
-      - { GOARCH: "arm", GO_ARM: "v7", GIT_STRATEGY: "none"}
+      - { TAG_ARCH: "native-amd64", GOARCH: "amd64", GIT_STRATEGY: "none" }
+      - { TAG_ARCH: "native-arm64", GOARCH: "arm64", GIT_STRATEGY: "none" }
+      - { TAG_ARCH: "native-arm64", GOARCH: "arm", GO_ARM: "v7", GIT_STRATEGY: "none"}
   variables:
     PKG: "github.com/sigstore/cosign/cmd/cosign/cli"
   script:
@@ -69,7 +69,7 @@ build:
     expire_in: 1 day
     public: true
   tags:
-    - native-amd64
+    - $TAG_ARCH
 
 containerize:
   stage: containerize
