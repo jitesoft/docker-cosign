@@ -38,7 +38,24 @@ check:
       - version.txt
     policy: pull
 
+download:
+  stage: check
+  script:
+    - wget https://github.com/sigstore/cosign/archive/refs/tags/${VERSION}.tar.gz -O cosign.tar.gz
+  rules:
+    - if: "$BUILD"
+      when: always
+    - when: never
+  artifacts:
+    paths:
+      - cosign.tar.gz
+    expire_in: 1 day
+    public: true
+
 build:
+  needs:
+    - job: download
+      artifacts: true
   stage: build
   image: registry.gitlab.com/jitesoft/dockerfiles/go:1.16
   parallel:
@@ -47,21 +64,20 @@ build:
       - { TAG_ARCH: "native-arm64", GOARCH: "arm64", GIT_STRATEGY: "none" }
       - { TAG_ARCH: "native-arm64", GOARCH: "arm", GO_ARM: "v7", GIT_STRATEGY: "none"}
   variables:
-    PKG: "github.com/sigstore/cosign/cmd/cosign/cli"
+    PKG: "github.com/sigstore/cosign/pkg/version"
   script:
     - apk add --no-cache gcc musl-dev
-    - wget https://github.com/sigstore/cosign/archive/refs/tags/${VERSION}.tar.gz
-    - tar -xf ${VERSION}.tar.gz
+    - tar -xf cosign.tar.gz
     - cd cosign-*
     - BUILD_DATE=$(date "+%Y-%m-%dT%H:%M:%SZ")
-    - CGO_ENABLED=on go build -ldflags="-s -w -X ${PKG}.GitVersion=${VERSION} -X ${PKG}.buildDate=${BUILD_DATE}" -o cosign ./cmd/cosign
+    - CGO_ENABLED=on go build -ldflags="-s -w -X $(PKG).gitTreeState=clean -X ${PKG}.GitVersion=${VERSION} -X ${PKG}.buildDate=${BUILD_DATE}" -o cosign ./cmd/cosign
     - cd ..
     - mkdir binaries
     - cp cosign-*/cosign binaries/cosign-${GOARCH}
     - ./binaries/cosign-${GOARCH} version
   rules:
     - if: "$BUILD"
-      when: always
+      when: on_success
     - when: never
   artifacts:
     paths:
