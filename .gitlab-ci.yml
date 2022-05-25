@@ -48,14 +48,13 @@ download:
     paths:
       - cosign.tar.gz
     expire_in: 1 day
-    public: true
 
 build:
   needs:
     - job: download
       artifacts: true
   stage: build
-  image: registry.gitlab.com/jitesoft/dockerfiles/go:1.16
+  image: registry.gitlab.com/jitesoft/dockerfiles/go:1.18
   parallel:
     matrix:
       - { TAG_ARCH: "native-amd64", GOARCH: "amd64", GIT_STRATEGY: "none" }
@@ -81,7 +80,6 @@ build:
     paths:
       - binaries
     expire_in: 1 day
-    public: true
   tags:
     - $TAG_ARCH
 
