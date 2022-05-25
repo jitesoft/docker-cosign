@@ -61,7 +61,7 @@ build:
       - { TAG_ARCH: "native-arm64", GOARCH: "arm64", GIT_STRATEGY: "none" }
       - { TAG_ARCH: "native-arm64", GOARCH: "arm", GO_ARM: "v7", GIT_STRATEGY: "none"}
   variables:
-    PKG: "github.com/sigstore/cosign/pkg/version"
+    PKG: "sigs.k8s.io/release-utils/version"
   script:
     - apk add --no-cache gcc musl-dev
     - tar -xf cosign.tar.gz
